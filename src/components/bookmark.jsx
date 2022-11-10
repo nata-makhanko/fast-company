@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const Bookmark = ({ bookmark, ...rest }) => {
   const clazz = "bi bi-bookmark";
   return (
@@ -7,6 +9,10 @@ const Bookmark = ({ bookmark, ...rest }) => {
       </div>
     </>
   );
+};
+
+Bookmark.propTypes = {
+  bookmark: PropTypes.bool.isRequired,
 };
 
 export default Bookmark;

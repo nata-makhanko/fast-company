@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const SearchStatus = ({ usersLength }) => {
   const renderPhrase = () => {
     const lastOne = Number(usersLength.toString().slice(-1));
@@ -18,6 +20,10 @@ const SearchStatus = ({ usersLength }) => {
       </span>
     </h2>
   );
+};
+
+SearchStatus.propTypes = {
+  usersLength: PropTypes.number.isRequired,
 };
 
 export default SearchStatus;

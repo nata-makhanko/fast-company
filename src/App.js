@@ -11,11 +11,6 @@ const App = () => {
   };
 
   const handleToggleBookmark = (userId) => {
-    // const elementUser = users.findIndex(user => user._id === userId);
-    // const newUsers = [...users];
-    // newUsers[elementUser].bookmark = !newUsers[elementUser].bookmark;
-    // setUsers(newUsers);
-
     setUsers(
       users.map(user => {
         if (user._id === userId) {
@@ -24,7 +19,6 @@ const App = () => {
         return user;
       })
     )
-
   }
 
   return (
