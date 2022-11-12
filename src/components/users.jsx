@@ -1,16 +1,19 @@
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+
+import GroupList from "./groupList";
+import SearchStatus from "./searchStatus";
 import User from "./user";
 import Pagination from "./pagination";
-import { useState, useEffect } from "react";
-import { paginate } from "../utils/paginate";
-import PropTypes from "prop-types";
-import GroupList from "./groupList";
+
 import api from "../api";
-import SearchStatus from "./searchStatus";
+import { paginate } from "../utils/paginate";
 
 const Users = ({ users, ...rest }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProf, setSelectedProf] = useState();
   const [professions, setProfessions] = useState();
+
   useEffect(() => {
     api.professions.fetchAll().then((data) => {
       setProfessions(data);
@@ -19,7 +22,8 @@ const Users = ({ users, ...rest }) => {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedProf]);
-  const pageSize = 4;
+
+  const pageSize = 3;
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
   };
@@ -27,13 +31,17 @@ const Users = ({ users, ...rest }) => {
     setSelectedProf(item);
   };
   const filtredUsers = selectedProf
-    ? users.filter((user) => user.profession === selectedProf)
+    ? users.filter(
+        (user) =>
+          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+      )
     : users;
   const count = filtredUsers.length;
   const userCrop = paginate(filtredUsers, currentPage, pageSize);
   const clearFilter = () => {
     setSelectedProf(undefined);
   };
+
   return (
     <div className="d-flex">
       {professions ? (
@@ -48,7 +56,7 @@ const Users = ({ users, ...rest }) => {
           </button>
         </div>
       ) : null}
-      <div className="d-flex flex-column">
+      <div className="d-flex flex-column mt-3">
         <SearchStatus usersLength={count} />
         {count > 0 ? (
           <table className="table">
@@ -69,9 +77,7 @@ const Users = ({ users, ...rest }) => {
               })}
             </tbody>
           </table>
-        ) : (
-          ""
-        )}
+        ) : null}
         <div className="d-flex justify-content-center">
           <Pagination
             itemsCount={count}
